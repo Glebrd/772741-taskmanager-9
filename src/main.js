@@ -1,6 +1,6 @@
 'use strict';
 
-const CARD_COUNT = 3;
+const NUMBER_OF_CARDS = 3;
 
 const getMenuMarkup = () => `<section class="control__btn-wrap">
   <input
@@ -473,7 +473,7 @@ addBlock(boardSection, getBoardFilterMarkup());
 addBlock(boardSection, getTasksContainerMarkup());
 const tasks = main.querySelector(`.board__tasks`);
 addBlock(tasks, getCardEditMarkup());
-for (let i = 0; i < CARD_COUNT; i++) {
+for (let i = 0; i < NUMBER_OF_CARDS; i++) {
   addBlock(tasks, getCardMarkup());
 }
 addBlock(boardSection, getLoadMoreButtonMarkup());
