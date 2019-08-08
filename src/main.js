@@ -110,16 +110,11 @@ const getFiltersMarkup = () => `<section class="main__filter filter container">
 >
 </section>`;
 
-const getBoardContainerMarkup = () => `<section class="board container"></section>`;
-
 const getBoardFilterMarkup = () => `<div class="board__filter-list">
 <a href="#" class="board__filter">SORT BY DEFAULT</a>
 <a href="#" class="board__filter">SORT BY DATE up</a>
 <a href="#" class="board__filter">SORT BY DATE down</a>
 </div>`;
-
-const getTasksContainerMarkup = () => `<div class="board__tasks"></div>`;
-
 
 const getCardEditMarkup = () => `<article class="card card--edit card--yellow card--repeat">
   <form class="card__form" method="get">
@@ -458,6 +453,24 @@ const getCardMarkup = () => `<article class="card card--black">
 
 const getLoadMoreButtonMarkup = () => `<button class="load-more" type="button">load more</button>`;
 
+const getCards = (numberOfCards) => {
+  let cards = ``;
+  for (let i = 0; i < numberOfCards; i++) {
+    cards += getCardMarkup();
+  }
+  return cards;
+};
+
+const getBoard = () =>
+  `<section class="board container">
+${getBoardFilterMarkup()}
+<div class="board__tasks">
+${getCardEditMarkup()}
+${getCards(NUMBER_OF_CARDS)}
+</div>
+${getLoadMoreButtonMarkup()}
+</section>`;
+
 const addBlock = (container, markup) => {
   container.insertAdjacentHTML(`beforeend`, markup);
 };
@@ -467,13 +480,4 @@ const controlSection = main.querySelector(`.main__control`);
 addBlock(controlSection, getMenuMarkup());
 addBlock(main, getSearchMarkup());
 addBlock(main, getFiltersMarkup());
-addBlock(main, getBoardContainerMarkup());
-const boardSection = main.querySelector(`.board`);
-addBlock(boardSection, getBoardFilterMarkup());
-addBlock(boardSection, getTasksContainerMarkup());
-const tasks = main.querySelector(`.board__tasks`);
-addBlock(tasks, getCardEditMarkup());
-for (let i = 0; i < NUMBER_OF_CARDS; i++) {
-  addBlock(tasks, getCardMarkup());
-}
-addBlock(boardSection, getLoadMoreButtonMarkup());
+addBlock(main, getBoard());
