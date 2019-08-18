@@ -1,4 +1,4 @@
-export const getCardMarkup = ({description, dueDate, repeatingDays, tags, color}) => `<article class="card card--${color} ${Object.keys(repeatingDays).some(day => repeatingDays[day]) ? `card--repeat` : ``}">
+export const getCardMarkup = ({description, dueDate, repeatingDays, tags, color}) => `<article class="card card--${color} ${Object.values(repeatingDays).includes(true) ? `card--repeat` : ``}">
 <div class="card__form">
   <div class="card__inner">
     <div class="card__control">

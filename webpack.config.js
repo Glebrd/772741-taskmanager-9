@@ -11,7 +11,8 @@ module.exports = {
   devtool: `source-map`, // Подключаем
   devServer: {
     contentBase: path.join(__dirname, `public`), // Где искать сборку
-    publicPath: 'http://localhost:8080/', // Веб адрес сборки
+    publicPath: 'http://localhost:8080/', // Веб адрес
+    port: 8095,
     compress: true, // Сжатие
     // Автоматическая перезагрузка страницы
     // Если не работает по стандартному URLу в браузере ‘http://localhost:8080’,

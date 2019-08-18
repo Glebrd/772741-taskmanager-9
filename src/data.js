@@ -1,16 +1,26 @@
+import {getRandomNumber} from "./util";
+import {shuffleArray} from "./util";
+// Структура данных для карточки
+
+const DATE_PERIOD = 7;
+const MILIESECONDS_IN_DAY = 86400000;
+const TAGS_MIN_COUNT = 0;
+const TAGS_MAX_COUNT = 3;
+
 const getCardData = () => ({
   description: [
     `Изучить теорию`,
     `Сделать домашку`,
     `Пройти интенсив на соточку`,
   ][Math.floor(Math.random() * 3)],
-  dueDate: Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000,
-  tags: new Set([
-    `cinema`,
-    `entertainment`,
-    `myself`,
-    `cinema`,
-  ]),
+  dueDate: Date.now() + getRandomNumber(-DATE_PERIOD, +DATE_PERIOD) * MILIESECONDS_IN_DAY,
+  tags: new Set(shuffleArray([
+    `homework`,
+    `theory`,
+    `practice`,
+    `intensive`,
+    `keks`,
+  ]).slice(TAGS_MIN_COUNT, getRandomNumber(TAGS_MIN_COUNT, TAGS_MAX_COUNT))),
   repeatingDays: {
     'mo': false,
     'tu': false,
@@ -31,7 +41,22 @@ const getCardData = () => ({
   isArchive: Boolean(Math.round(Math.random())),
 });
 
+// Структура данных для всех карточек
+
 export const getCardsData = (count) => {
   return new Array(count).fill(``).map(getCardData);
+};
+
+// Структура данных для фильтров
+export const getFilters = (cards) => {
+  return [
+    {title: `all`, count: cards.length},
+    {title: `overdue`, count: cards.filter((card) => card.dueDate < Date.now()).length},
+    {title: `today`, count: cards.filter((card) => Math.floor(new Date() / MILIESECONDS_IN_DAY) === Math.floor(card.dueDate / MILIESECONDS_IN_DAY)).length},
+    {title: `favorites`, count: cards.filter((card) => card.isFavorite === true).length},
+    {title: `repeating`, count: cards.filter((card) => Object.values(card.repeatingDays).includes(true)).length},
+    {title: `tags`, count: cards.filter((card) => card.tags.size !== 0).length},
+    {title: `archive`, count: cards.filter((card) => card.isArchive === true).length},
+  ];
 };
 
